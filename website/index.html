@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="A calm workspace for switching between Claude, OpenAI, and local AI models." />
+    <title>Switchboard — multi-model AI workspace</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Primary navigation">
+        <div class="brand-row">
+          <div class="brand-mark" aria-hidden="true">
+            <span></span><span></span><span></span>
+          </div>
+          <div>
+            <p class="brand-name">switchboard</p>
+            <p class="brand-caption">AI workspace</p>
+          </div>
+          <button class="icon-button sidebar-close" id="sidebarClose" aria-label="Close navigation">×</button>
+        </div>
+
+        <button class="new-chat-button" id="newChatButton">
+          <span class="plus-icon">+</span>
+          <span>New conversation</span>
+          <span class="shortcut">⌘ K</span>
+        </button>
+
+        <nav class="nav-list">
+          <a class="nav-item active" href="#" data-view="chat"><span class="nav-icon">⌁</span> Chat <span class="nav-count">4</span></a>
+          <a class="nav-item" href="#" data-view="library"><span class="nav-icon">▱</span> Prompt library</a>
+          <a class="nav-item" href="#" data-view="compare"><span class="nav-icon">◒</span> Compare models <span class="new-pill">NEW</span></a>
+        </nav>
+
+        <div class="sidebar-section">
+          <div class="section-heading">
+            <span>Your models</span>
+            <button class="text-button" id="manageModelsButton">Manage</button>
+          </div>
+          <div class="model-list" id="modelList"></div>
+        </div>
+
+        <div class="sidebar-section recent-section">
+          <div class="section-heading"><span>Recent chats</span><button class="more-button" aria-label="More recent chats">•••</button></div>
+          <div class="recent-list">
+            <button class="recent-chat selected" data-chat="launch-plan"><span class="recent-dot violet"></span><span>Launch plan for the studio</span><time>Now</time></button>
+            <button class="recent-chat" data-chat="landing-page"><span class="recent-dot amber"></span><span>Landing page feedback</span><time>Yesterday</time></button>
+            <button class="recent-chat" data-chat="sql-review"><span class="recent-dot mint"></span><span>Review this SQL query</span><time>Mon</time></button>
+          </div>
+        </div>
+
+        <div class="sidebar-footer">
+          <div class="usage-card">
+            <div class="usage-topline"><span>Workspace usage</span><strong>42%</strong></div>
+            <div class="usage-track"><span></span></div>
+            <p>Resets in 12 days <span>·</span> 62k credits left</p>
+          </div>
+          <button class="profile-button" id="profileButton">
+            <span class="avatar">US</span>
+            <span class="profile-copy"><strong>Umer Siddiqui</strong><small>Personal workspace</small></span>
+            <span class="chevron">⌄</span>
+          </button>
+        </div>
+      </aside>
+
+      <main class="main-panel">
+        <header class="topbar">
+          <button class="icon-button menu-button" id="menuButton" aria-label="Open navigation">☰</button>
+          <div class="breadcrumbs"><span>Workspace</span><span class="slash">/</span><strong>Chat</strong></div>
+          <div class="topbar-actions">
+            <button class="status-chip" id="connectionButton"><span class="status-dot"></span><span>3 models online</span></button>
+            <button class="icon-button" id="searchButton" aria-label="Search conversations">⌕</button>
+            <button class="icon-button" id="settingsButton" aria-label="Open settings">⚙</button>
+          </div>
+        </header>
+
+        <section class="content-area" id="contentArea">
+          <div class="welcome-view" id="welcomeView">
+            <div class="welcome-copy">
+              <p class="eyebrow"><span class="eyebrow-line"></span> THURSDAY, SEPTEMBER 17</p>
+              <h1>One workspace.<br /><em>Every model.</em></h1>
+              <p class="welcome-description">Think with the best model for the moment, then switch when the moment changes. No tabs. No context lost.</p>
+            </div>
+
+            <div class="hero-grid">
+              <article class="model-hero-card">
+                <div class="card-glow"></div>
+                <div class="hero-card-topline"><span class="live-badge"><span></span> Ready to think</span><button class="round-button" id="heroModelMenu" aria-label="Choose model">•••</button></div>
+                <div class="hero-model-icon claude-icon">✦</div>
+                <p class="card-label">CURRENT MODEL</p>
+                <h2 id="heroModelName">Claude 3.7 Sonnet</h2>
+                <p class="hero-model-description" id="heroModelDescription">Thoughtful, articulate, and great at turning a rough idea into a clear plan.</p>
+                <div class="hero-card-footer"><span id="heroModelProvider">Anthropic</span><span class="model-arrow">↗</span></div>
+              </article>
+
+              <div class="stats-column">
+                <div class="stat-card"><div class="stat-icon context-icon">◌</div><div><p>Context window</p><strong>78% <small>available</small></strong></div><span class="stat-trend">+12%</span></div>
+                <div class="stat-card"><div class="stat-icon speed-icon">ϟ</div><div><p>Avg. response</p><strong>1.8 <small>seconds</small></strong></div><span class="stat-trend neutral">steady</span></div>
+                <div class="stat-card"><div class="stat-icon credits-icon">◈</div><div><p>Credits this month</p><strong>2,480 <small>/ 5,000</small></strong></div><span class="stat-trend">49.6%</span></div>
+              </div>
+            </div>
+
+            <div class="starter-section">
+              <div class="section-heading large-heading"><span>Start with a direction</span><button class="text-button" id="shufflePrompts">Shuffle ↗</button></div>
+              <div class="starter-grid">
+                <button class="starter-card" data-prompt="Turn this rough idea into a crisp one-page product brief."><span class="starter-icon peach">✎</span><span><strong>Shape an idea</strong><small>Turn a thought into a plan</small></span><span class="starter-arrow">↗</span></button>
+                <button class="starter-card" data-prompt="Review this concept like a thoughtful product designer. What would you improve first?"><span class="starter-icon lilac">◒</span><span><strong>Get a second opinion</strong><small>See it from another angle</small></span><span class="starter-arrow">↗</span></button>
+                <button class="starter-card" data-prompt="Help me write a concise, warm message for a busy client."><span class="starter-icon mint">✦</span><span><strong>Make it clearer</strong><small>Polish words that matter</small></span><span class="starter-arrow">↗</span></button>
+              </div>
+            </div>
+
+            <div class="trust-row"><span class="lock-icon">⌑</span><span>Your conversations stay in your workspace.</span><button class="text-button" id="privacyButton">Privacy details</button></div>
+          </div>
+
+          <div class="chat-view hidden" id="chatView">
+            <div class="chat-header"><div><p class="eyebrow">CONVERSATION</p><h1 id="chatTitle">Launch plan for the studio</h1></div><div class="chat-header-actions"><button class="outline-button" id="shareButton">↗ <span>Share</span></button><button class="icon-button" id="chatMoreButton" aria-label="More conversation actions">•••</button></div></div>
+            <div class="message-list" id="messageList"></div>
+          </div>
+
+          <div class="library-view hidden" id="libraryView">
+            <div class="page-heading"><p class="eyebrow">YOUR SHORTCUTS</p><h1>Prompt library</h1><p>Keep your best ways of thinking close by.</p></div>
+            <div class="library-grid">
+              <button class="library-card" data-prompt="Give me three distinct directions for this idea. For each, include the audience, the promise, and the first experiment."><span class="library-card-icon lilac">◎</span><strong>Three directions</strong><span>Explore before you commit</span><small>Product · saved 2 days ago</small></button>
+              <button class="library-card" data-prompt="Rewrite this to sound direct, warm, and confident. Keep it under 120 words."><span class="library-card-icon peach">✎</span><strong>Clear and warm</strong><span>Make the message land</span><small>Writing · saved last week</small></button>
+              <button class="library-card" data-prompt="Act as a friendly critical reviewer. Tell me what is strong, what is unclear, and the one change with the highest leverage."><span class="library-card-icon mint">◒</span><strong>Critical friend</strong><span>Pressure-test the work</span><small>Review · saved last week</small></button>
+            </div>
+          </div>
+
+          <div class="compare-view hidden" id="compareView">
+            <div class="page-heading"><p class="eyebrow">SIDE BY SIDE</p><h1>Compare models</h1><p>Ask the same question in two different voices.</p></div>
+            <div class="compare-prompt"><textarea id="comparePrompt" rows="3" placeholder="What would you like to compare?"></textarea><button class="send-button" id="compareButton">Run comparison <span>↗</span></button></div>
+            <div class="comparison-results" id="comparisonResults"><div class="empty-compare"><span>◒</span><p>Your comparison will appear here.</p><small>Choose a prompt, then let the models disagree productively.</small></div></div>
+          </div>
+        </section>
+
+        <section class="composer-wrap" id="composerWrap">
+          <div class="model-picker" id="modelPicker">
+            <button class="model-picker-trigger" id="modelPickerTrigger"><span class="mini-model-icon claude-icon">✦</span><span><small>Replying with</small><strong id="pickerModelName">Claude 3.7 Sonnet</strong></span><span class="picker-chevron">⌄</span></button>
+            <div class="model-picker-menu" id="modelPickerMenu"></div>
+          </div>
+          <div class="composer-box"><div class="composer-tools"><button class="composer-tool" id="attachButton" aria-label="Attach a file">＋</button><span class="composer-hint">Shift + Enter for a new line</span></div><textarea id="messageInput" rows="1" placeholder="Ask anything, or start with a direction…"></textarea><div class="composer-bottom"><span class="composer-security"><span class="tiny-lock">⌑</span> Private by default</span><button class="send-button" id="sendButton" aria-label="Send message"><span>Send</span><span>↗</span></button></div></div>
+          <p class="disclaimer">Switchboard can make mistakes. Check important information.</p>
+        </section>
+      </main>
+    </div>
+
+    <div class="modal-backdrop hidden" id="settingsModal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="modal-card settings-card"><div class="modal-header"><div><p class="eyebrow">WORKSPACE</p><h2 id="settingsTitle">Connections & settings</h2></div><button class="icon-button close-modal" data-close-modal="settingsModal" aria-label="Close settings">×</button></div><p class="modal-intro">Connect the models you already use. Keys stay in your browser for this demo; use a server-side proxy before shipping to production.</p><div class="connection-list" id="connectionList"></div><div class="modal-footer"><span class="secure-note">⌑ Never share your API keys in chat.</span><button class="outline-button close-modal" data-close-modal="settingsModal">Done</button></div></div>
+    </div>
+
+    <div class="modal-backdrop hidden" id="privacyModal" role="dialog" aria-modal="true" aria-labelledby="privacyTitle"><div class="modal-card small-modal"><div class="modal-header"><div><p class="eyebrow">A QUIET PROMISE</p><h2 id="privacyTitle">Your space stays yours</h2></div><button class="icon-button close-modal" data-close-modal="privacyModal" aria-label="Close privacy details">×</button></div><div class="privacy-points"><p><span>01</span><strong>Private by default</strong><small>Your chats are shown only in this workspace.</small></p><p><span>02</span><strong>Bring your own keys</strong><small>Provider credentials belong in a secure backend in production.</small></p><p><span>03</span><strong>Switch without losing context</strong><small>The conversation stays yours, whatever model you choose.</small></p></div></div></div>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script src="app.js"></script>
+  </body>
+</html>

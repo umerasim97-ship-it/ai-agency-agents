@@ -47,6 +47,18 @@ Browse the agents below and copy/adapt the ones you need!
 
 ---
 
+## 🖼️ Bonus Web App: BG Remover (No API)
+
+A fully client-side **background remover web app** lives in [`bg-remover/`](bg-remover/) — the ISNet AI model runs **100% in your browser** via WebAssembly (models vendored locally, no API keys, no uploads, no limits).
+
+```bash
+cd bg-remover && python3 server.py   # → http://localhost:3000
+```
+
+See [`bg-remover/README.md`](bg-remover/README.md) for details.
+
+---
+
 ## 🎨 The Agency Roster
 
 ### 💻 Engineering Division

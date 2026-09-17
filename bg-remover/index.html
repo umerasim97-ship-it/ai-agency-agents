@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BG Remover — No API · 100% Browser</title>
+  <meta name="description" content="Remove image backgrounds completely in your browser. No API, no uploads, no sign-up — AI runs locally on your device." />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%236366f1'/%3E%3Cstop offset='1' stop-color='%23ec4899'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='24' fill='url(%23g)'/%3E%3Cpath d='M28 62 L44 40 L56 52 L72 32' stroke='white' stroke-width='8' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="top">
+    <div class="brand">
+      <span class="logo">BG</span>
+      <div>
+        <h1>BG Remover</h1>
+        <p class="tagline">No API · No upload · Sab kuch aap ke browser mein</p>
+      </div>
+    </div>
+    <div class="badges">
+      <span class="badge" id="engineDot"><i class="dot"></i><span id="engineText">Engine: idle</span></span>
+      <span class="badge">🔒 Private by design</span>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============ STAGE ============ -->
+    <section class="stage-wrap">
+      <div class="stage" id="stage">
+        <!-- Dropzone (initial state) -->
+        <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Upload image">
+          <input type="file" id="fileInput" accept="image/*" hidden />
+          <svg class="dz-icon" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+            <rect x="8" y="12" width="48" height="40" rx="6" stroke="url(#grad1)" stroke-width="3"/>
+            <circle cx="24" cy="28" r="5" stroke="url(#grad1)" stroke-width="3"/>
+            <path d="M8 46 L26 32 L38 42 L48 34 L56 42" stroke="url(#grad1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            <defs><linearGradient id="grad1" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#6366f1"/><stop offset="1" stop-color="#ec4899"/></linearGradient></defs>
+          </svg>
+          <h2>Photo yahan drop karein</h2>
+          <p>ya <b>click</b> karein · Ctrl+V se <b>paste</b> bhi ho sakta hai</p>
+          <p class="dz-sub">JPG · PNG · WebP — image kabhi server pe nahi jati</p>
+        </div>
+
+        <!-- Canvas (editor state) -->
+        <div class="canvas-area" id="canvasArea" hidden>
+          <canvas id="canvas" class="checker"></canvas>
+        </div>
+
+        <!-- Progress overlay -->
+        <div class="overlay" id="overlay" hidden>
+          <div class="spinner" aria-hidden="true"></div>
+          <div class="ov-title" id="ovTitle">Taiyari ho rahi hai…</div>
+          <div class="bar"><i id="ovBar"></i></div>
+          <div class="ov-sub" id="ovSub"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ CONTROL PANEL ============ -->
+    <aside class="panel" id="panel">
+      <div class="group">
+        <label class="glabel">Mode</label>
+        <div class="tabs" id="modeTabs">
+          <button class="tab active" data-mode="ai" type="button">✨ AI Cutout</button>
+          <button class="tab" data-mode="chroma" type="button">🎨 Color Key</button>
+        </div>
+        <p class="hint" id="modeHint">AI kisi bhi photo se background hata deta hai — log, products, animals.</p>
+      </div>
+
+      <div class="group" id="qualityGroup">
+        <label class="glabel">AI Quality</label>
+        <div class="tabs small" id="qualityTabs">
+          <button class="tab active" data-quality="fast" type="button">⚡ Fast</button>
+          <button class="tab" data-quality="high" type="button">💎 High</button>
+        </div>
+        <p class="hint">Fast = 42&nbsp;MB model (local) · High = 84&nbsp;MB (internet se, dafa-e-awwal)</p>
+      </div>
+
+      <div class="group" id="chromaGroup" hidden>
+        <label class="glabel">Color Tolerance <span id="tolVal" class="tolval">40</span></label>
+        <input type="range" id="tolerance" min="8" max="120" value="40" />
+        <p class="hint">Image pe <b>click</b> kar ke background ka color pick karein — solid backgrounds ke liye instant hai.</p>
+      </div>
+
+      <div class="group">
+        <label class="glabel">Background</label>
+        <div class="swatches" id="swatches">
+          <button class="swatch checker active" data-bg="transparent" title="Transparent" type="button"></button>
+          <button class="swatch" data-bg="#ffffff" style="background:#ffffff" title="White" type="button"></button>
+          <button class="swatch" data-bg="#0b0d12" style="background:#0b0d12" title="Black" type="button"></button>
+          <button class="swatch blur" data-bg="blur" title="Blur original background" type="button">
+            <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="2" stroke-dasharray="3 3"/><circle cx="12" cy="12" r="3.4" fill="currentColor"/></svg>
+          </button>
+          <label class="swatch custom" title="Custom color">
+            <svg viewBox="0 0 24 24" fill="none"><path d="M12 3a9 9 0 1 0 0 18c1.5 0 2-.9 2-1.8 0-.9-.6-1.4-.6-2.2 0-1 .8-1.6 1.9-1.6H17a4.5 4.5 0 0 0 4.5-4.5C21.5 6.4 17.2 3 12 3Z" stroke="currentColor" stroke-width="2"/><circle cx="7.5" cy="11" r="1.4" fill="currentColor"/><circle cx="11" cy="7.5" r="1.4" fill="currentColor"/><circle cx="15.5" cy="8.5" r="1.4" fill="currentColor"/></svg>
+            <input type="color" id="customColor" value="#6366f1" />
+          </label>
+        </div>
+      </div>
+
+      <div class="group actions">
+        <button class="btn primary" id="btnDownload" type="button">⬇ &nbsp;Download PNG</button>
+        <div class="row">
+          <button class="btn ghost" id="btnCopy" type="button">⧉ Copy</button>
+          <button class="btn ghost" id="btnOriginal" type="button">👁 Original</button>
+        </div>
+        <button class="btn text" id="btnNew" type="button">↺ New image</button>
+      </div>
+    </aside>
+  </main>
+
+  <footer>
+    <p>🖼 100% private — AI model aap ke browser mein chalta hai (WebAssembly). Koi API key nahi, koi server upload nahi, koi limit nahi.</p>
+    <p class="fine">Engine: <a href="https://github.com/imgly/background-removal-js" target="_blank" rel="noopener">@imgly/background-removal</a> (ISNet) · models locally vendored · MIT</p>
+  </footer>
+
+  <div class="toast" id="toast" role="status"></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

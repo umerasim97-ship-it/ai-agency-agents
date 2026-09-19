@@ -1,0 +1,9 @@
+# exports + user-private assets + local settings (never commit)
+OUTPUT/
+assets/*.png
+assets/*.jpg
+*.settings.txt
+*.tmp
+
+# preview render (AI-generated demo photo) — local only, not committed
+preview/

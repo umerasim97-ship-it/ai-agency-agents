@@ -97,6 +97,48 @@ only Option 1's folder layout is.
 
 ---
 
+## Can I do this on the free plan?
+
+Partly — and it depends on which "Claude" you mean.
+
+| What | Free? | Note |
+|---|---|---|
+| Claude chat (claude.ai, no card needed) | ✅ | Sonnet-class model, web search, file uploads, Projects, Artifacts |
+| Free usage cap | ⚠️ | Roughly 15–40 messages per rolling 5-hour window |
+| Claude Code (the terminal subagent tool) | ❌ | Requires Pro ($20/mo) or API credits |
+
+So on the free plan:
+
+- **Option 1 (Claude Code) does not work** — the free tier doesn't include it,
+  no matter what you paste into the folder.
+- **Option 2 (Claude.ai Projects) works.** Create a Project, upload the one or
+  two agent `.md` files you need, and add:
+  `Adopt the Frontend Developer persona from the attached file.`
+  This is the realistic free path for this repo.
+- **Option 3 (API) is not free** beyond the one-time starter credit new Console
+  accounts get (~$5), but it does unlock Claude Code until that credit is spent.
+
+### Legitimately free routes to *Claude Code* specifically
+
+1. **Anthropic Console starter credit** — new accounts get a small one-time
+   credit; point Claude Code at your API key. Good for evaluating, not for
+   daily work.
+2. **Claude for Open Source** — maintainers/contributors on qualifying projects
+   can get six months of the top-tier plan free. Check the current terms;
+   it has been expanded/closed at different times.
+3. **Point Claude Code at a different model** — it reads `ANTHROPIC_BASE_URL`,
+   so you can route it to OpenRouter or a local Ollama model. You get the
+   Claude Code *workflow*, but not Claude underneath.
+4. **Use a free agent CLI instead** — OpenCode (free, open source, bring your
+   own key), Google Antigravity (real free tier), Codex CLI and Grok Build
+   (limited free usage). The agents in this repo are plain markdown, so they
+   work in any of these.
+
+> Bottom line: the personas are free to use anywhere. Claude *Code* itself is
+> the paid part.
+
+---
+
 ## What is *not* an agent
 
 `strategy/**` (playbooks, runbooks, `nexus-strategy.md`, `EXECUTIVE-BRIEF.md`)
@@ -114,3 +156,4 @@ session when you want the multi-phase / multi-agent workflow.
 | Frontmatter check prints `MISSING FRONTMATTER` | The file was edited and lost its header — restore `name:` and `description:`. |
 | Claude ignores the persona | Name the agent explicitly in your prompt ("as the Backend Architect agent…"). |
 | Too many agents, replies feel generic | Install only the divisions you use: `cp engineering/*.md ~/.claude/agents/`. |
+| On the free plan, `/agents` isn't there | Expected — Claude Code needs Pro or API credits. Use Claude.ai Projects (Option 2) instead. |

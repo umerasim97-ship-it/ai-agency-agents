@@ -28,12 +28,26 @@ Inspired by a simple discussion and refined through months of iteration, **Open 
 ### Option 1: Use with Claude Code (Recommended)
 
 ```bash
-# Copy agents to your Claude Code directory
-cp -r agency-agents/* ~/.claude/agents/
+# One-command install (56 agents → ~/.claude/agents)
+./install-claude.sh
 
-# Now activate any agent in your Claude Code sessions:
-# "Hey Claude, activate Frontend Developer mode and help me build a React component"
+# Or install into just this project (./.claude/agents)
+./install-claude.sh --project
+
+# Preview first / check the frontmatter
+./install-claude.sh --dry-run
+./install-claude.sh --list
 ```
+
+Then restart Claude Code, run `/agents` to see the roster, and activate any agent in a session:
+
+```text
+"Use the Frontend Developer agent to build me a React component."
+```
+
+Manual equivalent: `mkdir -p ~/.claude/agents && cp */*.md ~/.claude/agents/`
+
+📖 Full guide — Claude Code, Claude.ai Projects, and the API: **[CLAUDE-SETUP.md](CLAUDE-SETUP.md)**
 
 ### Option 2: Use as Reference
 

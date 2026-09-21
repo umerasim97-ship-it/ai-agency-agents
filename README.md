@@ -1,18 +1,24 @@
-# 🤖 Open Agency: An Open-Source Workforce of AI Specialists 🤖
+<div align="center">
 
-<img width="1774" height="887" alt="ChatGPT Image Jun 8, 2026, 12_20_35 AM" src="https://github.com/user-attachments/assets/180db247-4217-45ff-82e9-99a90def73b2" />
+# 🤖 Open Agency
 
-> **Your entire AI agency, ready to work**. Frontend builders, community growth strategists, creativity boosters, and critical thinkers — every agent is designed with unique skills, processes, and real results in mind.
+### An open-source workforce of AI specialists
 
-[![GitHub stars](https://img.shields.io/github/stars/Anas-Khan93/ai-agency-agents?style=social)](https://github.com/Anas-Khan93/ai-agency-agents)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+<img width="100%" alt="Open Agency — an open-source workforce of AI specialists" src="https://github.com/user-attachments/assets/180db247-4217-45ff-82e9-99a90def73b2" />
+
+> **Your entire AI agency, ready to work.** Frontend builders, growth strategists, creative thinkers, and quality specialists — each with a clear role, a distinct point of view, and a practical way to deliver.
+
+[![GitHub stars](https://img.shields.io/github/stars/Anas-Khan93/ai-agency-agents?style=social)](https://github.com/Anas-Khan93/ai-agency-agents) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://makeapullrequest.com)
+
+[Explore the roster](#-the-agency-roster) · [Get started](#-quick-start) · [Read the NEXUS guide](strategy/QUICKSTART.md)
+
+</div>
 
 ---
 
 ## 🚀 What Is Open Agency?
 
-Inspired by a simple discussion and refined through months of iteration, **Open Agency** has evolved into a growing ecosystem of carefully designed AI agent personas. Each agent is built with a clear role and purpose:
+Inspired by a simple discussion and refined through months of iteration, **Open Agency** is a growing ecosystem of carefully designed AI agent personas. Each agent is built with a clear role, a distinct working style, and a practical path from brief to deliverable:
 
 - **🎯 Domain Specialists**: Deep expertise in their domain (not generic prompt templates)
 - **🧠 Personality-Driven**: Distinct voice, thinking style, and way of communicating
@@ -27,23 +33,31 @@ Inspired by a simple discussion and refined through months of iteration, **Open 
 
 ### Option 1: Use with Claude Code (Recommended)
 
-```bash
-# Copy agents to your Claude Code directory
-cp -r agency-agents/* ~/.claude/agents/
+From the repository root, copy the 56 specialist prompts into Claude Code's agent directory:
 
-# Now activate any agent in your Claude Code sessions:
-# "Hey Claude, activate Frontend Developer mode and help me build a React component"
+```bash
+mkdir -p ~/.claude/agents
+find design engineering marketing product project-management \
+  spatial-computing specialized support testing \
+  -type f -name '*.md' -exec cp {} ~/.claude/agents/ \;
+```
+
+Then activate any specialist in a Claude Code session:
+
+```text
+Activate Frontend Developer mode and help me build a React component.
 ```
 
 ### Option 2: Use as Reference
 
 Each agent file contains:
-- Identity & personality traits
-- Core mission & workflows
-- Technical deliverables with code examples
-- Success metrics & communication style
 
-Browse the agents below and copy/adapt the ones you need!
+- Identity and personality traits
+- Core mission and repeatable workflows
+- Technical deliverables with practical examples
+- Success metrics and communication style
+
+Browse the roster below, then copy or adapt the specialists you need.
 
 ---
 
@@ -161,6 +175,7 @@ The unique specialists who don't fit in a box.
 | Agent | Specialty | When to Use |
 |-------|-----------|-------------|
 | 🎭 [Agents Orchestrator](specialized/agents-orchestrator.md) | Multi-agent coordination, workflow management | Complex projects requiring multiple agent coordination |
+| 🛡️ [Agentic Identity & Trust Architect](specialized/agentic-identity-trust.md) | Agent identity, authorization, and verifiable evidence | Zero-trust multi-agent systems and secure delegation |
 | 📊 [Data Analytics Reporter](specialized/data-analytics-reporter.md) | Business intelligence, data insights | Deep data analysis, business metrics, strategic insights |
 | 🔍 [LSP/Index Engineer](specialized/lsp-index-engineer.md) | Language Server Protocol, code intelligence | Code intelligence systems, LSP implementation, semantic indexing |
 | 📥 [Sales Data Extraction Agent](specialized/sales-data-extraction-agent.md) | Excel monitoring, sales metric extraction | Sales data ingestion, MTD/YTD/Year End metrics |
@@ -292,11 +307,11 @@ Each agent is designed with:
 
 ## 📊 Stats
 
-- 🎭 **55+ Specialized Agents** across 9 divisions
-- 📝 **10,000+ lines** of personality, process, and code examples
-- ⏱️ **Months of iteration** from real-world usage
-- 🌟 **Battle-tested** in production environments
-- 💬 **50+ requests** in first 12 hours on Reddit
+- 🎭 **56 specialized agents** across 9 divisions
+- 📝 **13,000+ lines** of personality, process, and code examples
+- ⏱️ **Months of iteration** shaped by real-world usage
+- 🌟 **Practical, outcome-focused** workflows and deliverables
+- 💬 **Community-informed** and open to improvement
 
 ---
 
@@ -322,7 +337,7 @@ MIT License - Use freely, commercially or personally. Attribution appreciated bu
 
 Born from a discussion about AI agent specialization. Thanks to the community for the feedback, requests, and inspiration.
 
-Special recognition to the 50+ Redditors who requested this within the first 12 hours - you proved there's demand for real, specialized AI agent systems.
+Special recognition to the early community members who requested this project and helped prove the demand for real, specialized AI agent systems.
 
 ---
 
